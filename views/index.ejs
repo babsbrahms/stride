@@ -1,0 +1,117 @@
+
+
+<%- include partials/head.ejs %>
+<body>
+    <!--::header part start::-->
+    <%- include partials/header.ejs %>
+    <!-- Header part end-->
+
+    <!-- banner post start-->
+    <section class="banner_post">
+        <div class="container-fluid">
+            <div class="row">
+                <%blogs.forEach(function(blog){%>
+                    <div class="banner_post_1 banner_post_bg_1">
+                        <div class="banner_post_iner text-center">
+                            <a href="/category/<%=blog.category%>"><h5> <%=blog.category%></h5></a> 
+                            <a href="/blog/<%=blog._id%>"><h2> <%=blog.title%> </h2></a> 
+                            <p>Posted on <%=blog.date%></p>
+                        </div>
+                    </div>
+                <%})%>
+            </div>
+        </div>
+    </section>
+    <!-- banner post end-->
+
+    <!-- subscribe form start-->
+    <div class="subscribe_form padding_top margin_top">
+        <div class="container">
+            <div class="row ">
+                <div class="col-lg-12">
+                    <div class="subscribe_form_iner">
+                        <form>
+                            <div class="form-row align-items-center justify-content-center">
+                                <div class="col-md-12 col-lg-3">
+                                <h3>Subscribe
+                                        Our Newsletter</h3>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                <input type="text" class="form-control" placeholder="Your name">
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                <input type="text" class="form-control" placeholder="Your email">
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                    <a href="#" class="btn_1">Subscribe</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- subscribe form end-->
+
+    <!-- feature_post start-->
+    <section class="all_post section_padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="row">
+                        <%blogs.forEach(function(blog){%>
+                        <div class="col-lg-12">
+                            <div class="single_post post_1 feature_post">
+                                <div class="single_post_img">
+                                    <img src="<%=blog.poster%>" alt="">
+                                </div>
+                                <div class="single_post_text text-center">
+                                    <a href="/category/<%=blog.category%>"><h5> <%=blog.category%></h5></a> 
+                                    <a href="/blog/<%=blog._id%>"><h2><%=blog.title%></h2></a>
+                                    <p>Posted on <%=blog.date%></p>
+                                </div>
+                            </div>
+                        </div>
+                        <%})%>
+                    </div>
+                    <div class="page_pageniation">
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination justify-content-center">
+                                <li class="page-item disabled">
+                                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                                </li>
+
+                                <li class="page-item">
+                                <a class="page-link" href="#">Next</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <%- include partials/sidebar.ejs %>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- feature_post end-->
+
+    <!-- social_connect_part part start-->
+    <%- include partials/social.ejs %>
+    <!-- social_connect_part part end-->
+
+     <!-- footer part start-->
+    <%- include partials/footer.ejs %>
+    <!-- footer part end-->
+    <!-- jquery -->
+    <script src="js/jquery-1.12.1.min.js"></script>
+    <!-- popper js -->
+    <script src="js/popper.min.js"></script>
+    <!-- bootstrap js -->
+    <script src="js/bootstrap.min.js"></script>
+    <!-- custom js -->
+    <script src="js/custom.js"></script>
+</body>
+
+</html>
