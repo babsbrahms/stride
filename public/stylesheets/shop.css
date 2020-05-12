@@ -1,0 +1,162 @@
+.html,body{
+	padding: 0;
+	margin: 0;
+	background: #333333;
+	color: rgb(230, 157, 63);
+}
+#black{
+	color: #2e2b2b
+}
+#img-center{
+	height: 80vh;
+	width: 80%
+}
+
+.breadcrumb{
+	padding-bottom: 0px;
+	padding-top: 0px;
+	color: rgb(49, 45, 45);
+}
+
+
+/* img frame */
+.frame{
+    width: 100%;
+    height: 80vh;
+    border-right: #333333 5px solid;
+    border-left: #333333 5px solid;
+    border-top: #333333 70px solid;
+    border-bottom: #333333 10px solid;
+    border-radius: 3%;
+}
+
+.frameMain{
+    width: 95%;
+    height: 75%;
+    margin: auto;
+    position: relative;
+    top:1%;
+    border: #c2db52 1px solid;
+    border-radius: 1%;
+    background: #111
+}
+
+.frameMain img{
+    position: relative;
+    max-height: 100%;
+    max-width: 100%;
+    margin: auto;
+}
+
+.frameOthers{
+    width: 95%;
+    height: 15%;
+    margin: auto;
+    position: relative;
+    top:2%;
+    border: #c2db52 1px solid;
+    border-radius: 2%;
+    overflow-y: hidden;
+    overflow-x: scroll;
+    display: flex;
+}
+
+.frameOthers img{
+    position: relative;
+    height: 100%;
+    margin:0 4px;
+}
+
+.frameBtn{
+    position: relative;
+    top:2.5%;
+    width: 95%;
+    margin: auto;
+}
+.frameTitle{
+    position: relative;
+    top: -7%;
+    width: 95%;
+    margin: auto;
+}
+.bread{
+    position: absolute;
+    color: #333333;
+    width: 100%;
+    margin: auto;
+    padding: 1.5%; 
+    margin-bottom: 35px;
+    list-style: none;
+    background-color: #f5f5f5;
+    border-radius: 4px;
+}
+
+#frameText{
+    color: #333333;
+}
+
+
+@media (max-width: 600px){
+	#left-thumb{
+		display: none;
+	}
+
+	#center-thumb{
+		display: block;
+		width: 90vw;
+		margin: auto;
+	} 
+
+	#img-center{
+		height: 80vh;
+		width: 90%;
+		margin: auto;
+	}
+
+	#right-thumb{
+		display: none;
+	}
+
+}
+
+
+
+/* search */
+.searchResult{
+    display: none;
+}
+
+/* infoBox */
+#infoBox{
+    position: fixed;
+    left: 8%;
+    top: 85vh;
+    background:  rgb(230, 157, 63);
+    color:#333333;
+    border: solid white 1.5px;
+    border-radius: 5px;
+    width: 20%;
+    height: auto;
+}
+
+#infoContent{
+    position: fixed;
+    top: 20vh;
+    background: white;
+    color: #333333;
+    border: double 2px rgb(230, 157, 63);
+    border-radius: 8px;
+}
+
+/* chat */
+#chat{
+    position: fixed;
+    right: 8%;
+    top: 85vh;
+    background:  rgb(230, 157, 63);
+    color:#333333;
+    border: solid white 1.5px;
+    border-radius: 50%;
+    padding: 5px;
+    height: auto;
+}

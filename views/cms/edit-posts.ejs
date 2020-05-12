@@ -1,0 +1,82 @@
+
+
+	<% include ./common/header %>
+	
+	<header id="header">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-10">
+					<h1><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Edit posts</h1>
+				</div>
+
+				
+
+			</div>
+		</div>
+	</header>
+
+	<section id="main">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-3">
+					<div class="list-group">
+						<a href="/cms" class="list-group-item active main-color-bg">
+							<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>  Dashboard
+						</a>
+					</div>
+
+				</div>
+				<div class="col-md-9">
+					<!-- website overview -->
+					<div class="panel panel-default ">
+						<div class="panel-heading main-color-bg">
+							<h3 class="panel-title"> Edit Blog Posts</h3>
+						</div>
+						<div class="panel-body">
+				<form action="/cms/edit-posts/<%= blog._id%>" method="post" enctype="multipart/form-data">
+					<div class="form-group">
+						<label>Title</label>
+						<input type="text" name="title" class="form-control" placeholder="blog title" value="<%=blog.title %>">
+					</div>
+
+					<div class="form-group">
+							<label>Author</label>
+							<input type="text" name="author" class="form-control" placeholder="blog author" value="<%=blog.author %>">
+					</div>
+
+					<div class="form-group">
+						<label>Date</label>
+						<input type="date" name="date" class="form-control" value="<%=blog.date %>">
+					</div>
+
+					<div class="form-group">
+						<label>Poster</label>
+						<img src="<%=blog.poster %>" />
+						<input type="file" name="poster" accept=".jpeg, .jpg, .png, .gif" class="form-control" placeholder="add images" multiple>
+					</div>
+
+					<div class="form-group">
+						<label>Body</label>
+						<textarea name="editor1" class="form-control" placeholder="blog body">
+							<%= blog.body %>
+						</textarea>
+					</div>
+
+					<div>
+						
+						<input type="submit" class="btn btn-success" value="submit">
+					</div>
+				</form>
+
+						</div>
+
+					</div>
+
+
+
+				</div>
+			</div>
+	</section>
+
+
+	<% include ./common/footer %>
