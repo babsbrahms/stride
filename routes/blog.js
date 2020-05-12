@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 
 var Blog = require('../model/blog')
-var Category = require('../model/category');
 
 /* GET users listing. */
 router.get('/:id', function(req, res, next) {
@@ -13,12 +12,13 @@ router.get('/:id', function(req, res, next) {
 
       res.render('error', { page: 'Blog', message: err.message });
     } else {
-      Category.find({}, (errs, categories) => {
+      Blog.distinct('category').exec((errs, categories) => {
         if (errs) {
           res.locals.error = req.app.get('env') === 'development' ? errs : {};
 
           res.render('error', { page: 'Blog', message: errs.message });
         }
+        
         res.render('single-blog', { page: 'Blog', blog, categories });
       })
     }

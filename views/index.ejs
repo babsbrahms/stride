@@ -10,18 +10,13 @@
     <section class="banner_post">
         <div class="container-fluid">
             <div class="row">
-                <%blogs.forEach(function(blog){%>
-                    <div class="banner_post_1 banner_post_bg_1">
-                        <div class="banner_post_iner text-center">
-                            <a href="/category/<%=blog.category%>"><h5> <%=blog.category%></h5></a> 
-                            <a href="/blog/<%=blog._id%>"><h2> <%=blog.title%> </h2></a> 
-                            <p>Posted on <%=blog.date%></p>
-                        </div>
-                    </div>
-                <%})%>
+                <img src="/img/low-angle-photography-of-pile-of-stainless-steel-chairs-with-691485.jpg" />
+
             </div>
         </div>
     </section>
+    <h1 style="text-align: center; position: relative; top: -100px;">Get the latest event updates in Nigeria<h1>
+
     <!-- banner post end-->
 
     <!-- subscribe form start-->
@@ -60,19 +55,19 @@
             <div class="row">
                 <div class="col-lg-8">
                     <div class="row">
-                        <%blogs.forEach(function(blog){%>
-                        <div class="col-lg-12">
-                            <div class="single_post post_1 feature_post">
-                                <div class="single_post_img">
-                                    <img src="<%=blog.poster%>" alt="">
-                                </div>
-                                <div class="single_post_text text-center">
-                                    <a href="/category/<%=blog.category%>"><h5> <%=blog.category%></h5></a> 
-                                    <a href="/blog/<%=blog._id%>"><h2><%=blog.title%></h2></a>
-                                    <p>Posted on <%=blog.date%></p>
+                        <%blogs.forEach(function(blog, index){%>
+                            <div class="col-lg-12">
+                                <div class="single_post post_1 feature_post">
+                                    <div class="single_post_img">
+                                        <img src="<%=blog.poster%>" alt="">
+                                    </div>
+                                    <div class="single_post_text text-center">
+                                        <a href="/category/<%=blog.category%>"><h5> <%=blog.category%></h5></a> 
+                                        <a href="/blog/<%=blog._id%>"><h2><%=blog.title%></h2></a>
+                                        <p>Posted on <%=blog.date%></p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
                         <%})%>
                     </div>
                     <div class="page_pageniation">

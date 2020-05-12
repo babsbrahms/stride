@@ -2,14 +2,13 @@ var express = require('express');
 var router = express.Router();
 
 var Blog = require('../model/blog')
-var Category = require('../model/category');
 
 /* GET users listing. */
 router.get('/:name', function(req, res, next) {
   const {name} = req.params;
 
   Blog.find({ category: name }, (err, blogs) => {
-    Category.find({}, (errs, categories) => {
+    Blog.distinct('category').exec((errs, categories) => {
       if (err || errs) {
         res.locals.error = req.app.get('env') === 'development' ? err||errs : {};
 
