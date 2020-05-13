@@ -25,6 +25,8 @@
     <!-- breadcrumb start-->
     <br />
     <br/>
+    <br />
+    <br/>
     <div class="d-flex flex-row justify-content-center">
         <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModalCenter">
             Create Blog
@@ -69,7 +71,7 @@
                     
                                         <div class="form-group">
                                             <label>Date</label>
-                                            <input required type="date" name="date" class="form-control">
+                                            <input required type="date" min="new Date()" name="date" class="form-control">
                                         </div>
                     
                                         <div class="form-group">
@@ -139,7 +141,7 @@
 							
 									<td><%=blog.category %></td>
 									
-                                    <td><%=blog.date %></td>
+                                    <td><%=new Date(blog.date).toLocaleString()%></td>
                                     
 									<td><a class="btn btn-default" href="/cms/edit-post/<%=blog._id %>">Edit</a> <button onclick="deleteBloglPost(this)" class="btn btn-danger delete-post" data-id="<%=blog._id%>">Delete</button></td>
 								</tr>

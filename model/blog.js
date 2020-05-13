@@ -7,7 +7,7 @@ var blog = new Schema({
     poster: { type: String },
     author: { type: String },
     category: { type: String, index: true },
-    date: {  type: String },
+    date: {  type: Date },
     body: { type: String },
     tags: { type: Array }
 })

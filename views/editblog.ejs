@@ -27,6 +27,8 @@
   <!-- ================ contact section start ================= -->
   <br />
   <br/>
+  <br />
+  <br/>
   <div class="d-flex flex-row justify-content-center">
     <h2>Edit Blog</h2>
   </div>
@@ -36,20 +38,20 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <form action="/cms/edit-post/<%=blog._id%>" method="post" enctype="multipart/form-data">
+                <form id="createPost" action="/cms/edit-post/<%=blog._id%>" method="post" enctype="multipart/form-data">
                     <div class="form-group">
                         <label>Title</label>
-                        <input type="text" name="title" class="form-control" placeholder="blog title" value="<%=blog.title %>">
+                        <input required type="text" name="title" class="form-control" placeholder="blog title" value="<%=blog.title %>">
                     </div>
 
                     <div class="form-group">
                             <label>Author</label>
-                            <input type="text" name="author" class="form-control" placeholder="blog author" value="<%=blog.author %>">
+                            <input required type="text" name="author" class="form-control" placeholder="blog author" value="<%=blog.author %>">
                     </div>
 
                     <div class="form-group">
                         <label>Category</label>
-                        <select class="form-control" name="category">
+                        <select required class="form-control" name="category">
                             <option value="music">Music</option>
                             <option value="comedy">Comedy</option>
                             <option value="community">Community</option>
@@ -60,18 +62,20 @@
 
                     <div class="form-group">
                         <label>Date</label>
-                        <input type="date" name="date" class="form-control" value="<%=blog.date %>">
+                        <input required type="date" min="new Date()" name="date" class="form-control" value="<%=blog.date %>">
                     </div>
 
                     <div class="form-group">
                         <label>Poster</label>
-                        <img src="<%=blog.poster %>" />
+                        <br/>
+                        <img id="poster-img" src="<%=blog.poster %>" />
+                        <input type="hidden" name="oldPoster" value="<%=blog.poster %>" />
                         <input type="file" name="poster" accept=".jpeg, .jpg, .png, .gif" class="form-control" placeholder="add images" multiple>
                     </div>
 
                     <div class="form-group">
                         <label>Body</label>
-                        <textarea name="editor1" class="form-control" placeholder="blog body">
+                        <textarea required name="body" class="form-control" placeholder="blog body">
                             <%= blog.body %>
                         </textarea>
                     </div>
@@ -98,8 +102,8 @@
     <script type="text/javascript" src="/ckeditor/ckeditor.js"></script> 
 
     <script type="text/javascript">
-        //we have name="editor1" in the textarea tag
-            CKEDITOR.replace('editor1');
+        //we have name="body" in the textarea tag
+            CKEDITOR.replace('body');
     </script>
   <!-- jquery plugins here-->
   <!-- jquery -->
@@ -110,6 +114,20 @@
   <script src="/js/bootstrap.min.js"></script>
   <!-- custom js -->
   <script src="/js/custom.js"></script>
+
+  <script>
+
+    let form = document.getElementById('createPost')
+    let img = document.getElementById('poster-img');
+    let poster = form['poster'];
+
+    poster.onchange = function(e) {
+
+        img.setAttribute('src', URL.createObjectURL(e.target.files[0]))
+          
+    }
+  
+  </script>
 </body>
 
 </html>

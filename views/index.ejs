@@ -25,21 +25,21 @@
             <div class="row ">
                 <div class="col-lg-12">
                     <div class="subscribe_form_iner">
-                        <form>
+                        <form action="/newsletter" method="post">
                             <div class="form-row align-items-center justify-content-center">
                                 <div class="col-md-12 col-lg-3">
                                 <h3>Subscribe
                                         Our Newsletter</h3>
                                 </div>
                                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                <input type="text" class="form-control" placeholder="Your name">
+                                <input name="name" type="text" class="form-control" required placeholder="Your name">
                                 </div>
                                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                <input type="text" class="form-control" placeholder="Your email">
+                                <input name="email" type="email" class="form-control" required placeholder="Your email">
                                 </div>
-                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                    <a href="#" class="btn_1">Subscribe</a>
-                                </div>
+                                <button style="margin: 0; padding: 0;" class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                    <a class="btn_1">Subscribe</a>
+                                </button>
                             </div>
                         </form>
                     </div>
@@ -64,7 +64,7 @@
                                     <div class="single_post_text text-center">
                                         <a href="/category/<%=blog.category%>"><h5> <%=blog.category%></h5></a> 
                                         <a href="/blog/<%=blog._id%>"><h2><%=blog.title%></h2></a>
-                                        <p>Posted on <%=blog.date%></p>
+                                        <p>Posted on <%=new Date(blog.date).toLocaleString()%> </p>
                                     </div>
                                 </div>
                             </div>

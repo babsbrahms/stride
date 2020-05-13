@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var multer = require('multer');
 
-var upload = multer({ dest: 'uploads/' })
+var upload = multer({ dest: './public/uploads/' })
 
 var Blog = require('../model/blog')
 
@@ -10,7 +10,7 @@ var Blog = require('../model/blog')
 
 
 router.get('/', function(req, res, next) {
-    Blog.find({}, (err, blogs) => {
+    Blog.find({}).sort({ date: -1 }).exec(function (err, blogs) {
         if (err) {
             res.locals.error = req.app.get('env') === 'development' ? err : {};
     
@@ -23,11 +23,21 @@ router.get('/', function(req, res, next) {
 router.post('/create-posts', upload.single('poster'), function(req, res, next) {
     const { title, author, category, date, body} = req.body;
 
-    console.log({ title, author, category, date, body});
+
     console.log(req.file);
     
-
-    res.redirect('/cms')
+    Blog.create({
+        title, author, category, date, body, poster: `/uploads/${req.file.filename}`
+    }).then((doc) => {
+        console.log(doc);
+        res.redirect('/cms')
+    })
+    .catch((err) => {
+        res.locals.error = req.app.get('env') === 'development' ? err : {};
+    
+        res.render('error', { page: 'CMS' });
+    })
+    
     
 });
 
@@ -46,17 +56,21 @@ router.get('/edit-post/:id', (req, res) => {
 })
 
 
-router.post('/edit-post/:id', upload.single('avatar'), (req, res) => {
+router.post('/edit-post/:id', upload.single('poster'), (req, res) => {
     const {id } = req.params;
-    const body = res.body;
+    const { title, author, category, date, body, oldPoster} = req.body;
 
-    Blog.updateOne({ _id: id}, { $set: { }}).exec((err, blog) => {
+    Blog.updateOne({ _id: id}, { $set: { 
+        title, author, category, date, body, poster: (req.file && req.file.filename)? `/uploads/${req.file.filename}`: oldPoster
+    }}).exec((err, blog) => {
         if (err) {
             res.locals.error = req.app.get('env') === 'development' ? err : {};
     
             res.render('error', { page: 'Blog', message: err.message});
+        } else {
+            res.redirect(`/blog/${id}`)
         }
-        res.render('editblog', { page: 'Edit Post', blog})
+        
     })
 })
 

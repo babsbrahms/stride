@@ -27,19 +27,6 @@
   <!-- ================ contact section start ================= -->
   <section class="contact-section section_padding">
     <div class="container">
-      <!-- <div class="alert alert-warning alert-dismissible fade show" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        <%if(message) {%> <h2><%=message%></h2> <%}%>
-        <%if(errors) {%> 
-          <ul>
-            <%errors.forEach(function(error) {%>
-              <li><%=error.msg%></li>
-            <%})%>
-          </ul>  
-        <%}%>
-      </div> -->
 
       <div class="row">
         <div class="col-12">
@@ -59,7 +46,7 @@
               </div>
               <div class="col-sm-6">
                 <div class="form-group">
-                  <input class="form-control" name="name" id="name" type="text" onfocus="this.placeholder = ''"
+                  <input required class="form-control" name="name" id="name" type="text" onfocus="this.placeholder = ''"
                     onblur="this.placeholder = 'Enter your name'" placeholder='Enter your name'>
                 </div>
               </div>
