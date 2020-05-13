@@ -118,11 +118,13 @@
 						<div class="panel-body">
 							<div class="row">
 								<div class="col-md-12">
-								<div id="info">
-									
-								</div>
-									<input type="text" id="search" class="form-control" placeholder="filter posts...">
-								</div>
+                                    <form id="search-form">
+                                        <input type="text" id="search-input" class="form-control" placeholder="filter posts...">
+
+                                    </form>
+                                    <ul class="list-group" id="search-ul"></ul>
+                                </div>
+
 							</div>
 							<div id="posts">
 							<table class="table table-striped table-hover">
@@ -183,7 +185,7 @@
   <script src="js/custom.js"></script>
 
   <script>
-  
+      //DELETE BLOG
     function deleteBloglPost (self) {
         let id = self.getAttribute('data-id');
 
@@ -199,16 +201,53 @@
         console.log(id);
     }
 
+    // CHANGE POSTER IMAGE
     let form = document.getElementById('createPost')
     let img = document.getElementById('poster-img');
     let poster = form['poster'];
 
     poster.onchange = function(e) {
-
-        img.setAttribute('src', URL.createObjectURL(e.target.files[0]))
-          
+        img.setAttribute('src', URL.createObjectURL(e.target.files[0]))    
     }
 
+    //SEARCH BLOG
+        let searchInput = document.getElementById('search-input');
+        let searchForm = document.getElementById('search-form')
+
+        searchForm.onsubmit = function (e) {
+            e.preventDefault;
+            searchBlog(e)
+            return false;
+        }
+
+        function searchBlog (e) {
+            e.preventDefault()
+            fetch(`/search?search=${searchInput.value}`, {
+                method: 'GET'
+            })
+            .then(res => res.json())
+            .then(res =>{
+
+                let Card = ''
+                res.result.forEach(element => 
+                    Card += `<li class="list-group-item text-center"> <a href="/blog/${element._id}">${element.title} </a></li>`
+                );
+                
+                document.getElementById('search-ul').innerHTML = Card ;
+            })
+            .catch(err => {
+
+            })
+
+            
+        }
+
+        searchInput.onkeyup = function (e) {
+            
+            if (e.target.value <= 1) {
+                document.getElementById('sidebar-search-ul').innerHTML = ''
+            }
+        }
   </script>
 </body>
 

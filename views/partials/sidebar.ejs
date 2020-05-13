@@ -1,31 +1,56 @@
                     <div class="sidebar_widget">
                         <div class="single_sidebar_wiget search_form_widget">
-                            <form action="#">
+                            <form id="sidebar-search-form" autocomplete="on">
                                 <div class="form-group">
                                     <input id="sidebar-search-input" type="text" class="form-control" placeholder='Search Keyword'
                                         onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Keyword'">
+                                        <ul class="list-group" id="sidebar-search-ul"></ul>
                                     <div id='sidebar-search-btn' class="btn_1">search</div>
                                 </div>
                             </form>
+                            
                         </div>
                         <script>
                             let searchBtn= document.getElementById('sidebar-search-btn')
-                            let searchInput = document.getElementById('sidebar-search-input')
-                            searchBtn.addEventListener('click', (e) => {
+                            let searchInput = document.getElementById('sidebar-search-input');
+                            let form = document.getElementById('sidebar-search-form')
+                            searchBtn.addEventListener('click', searchBlog)
 
-                                fetch(`/blog/search?search=${searchInput.value}`, {
+                            form.onsubmit = function (e) {
+                                e.preventDefault;
+                                console.log('hi');
+                                searchBlog(e)
+                                return false;
+                            }
+
+                            function searchBlog (e) {
+                                e.preventDefault()
+                                fetch(`/search?search=${searchInput.value}`, {
                                     method: 'GET'
                                 })
                                 .then(res => res.json())
                                 .then(res =>{
-                                    console.log(res);
+
+                                    let Card = ''
+                                    res.result.forEach(element => 
+                                        Card += `<li class="list-group-item text-center"> <a href="/blog/${element._id}">${element.title} </a></li>`
+                                    );
+                                    
+                                    document.getElementById('sidebar-search-ul').innerHTML = Card ;
                                 })
                                 .catch(err => {
 
                                 })
-                                
 
-                            })
+                               
+                            }
+
+                            searchInput.onkeyup = function (e) {
+                                
+                                if (e.target.value <= 1) {
+                                    document.getElementById('sidebar-search-ul').innerHTML = ''
+                                }
+                            }
 
                         </script>
                         <div class="single_sidebar_wiget">
