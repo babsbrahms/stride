@@ -6,7 +6,7 @@ var Newsletter = require('../model/newletter')
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  Blog.find({}).sort({ date: -1 }).exec(function (err, blogs) {
+  Blog.find({}).sort({ createdAt: -1 }).exec(function (err, blogs) {
     Blog.distinct('category').exec((errs, categories) => {
       if (err || errs) {
         res.locals.error = req.app.get('env') === 'development' ? err||errs : {};
@@ -34,5 +34,16 @@ router.post('/newsletter' , (req, res) => {
     res.send(err)
   })
 })
+
+
+router.get('/search', function(req, res, next) {
+  let { search } = req.query;
+  console.log(search);
+  Blog.find({ $text: {$search : search }}, (err, result) => {
+    console.log(result);
+    
+    res.send({ result })
+  })
+});
 
 module.exports = router;

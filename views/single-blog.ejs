@@ -46,7 +46,7 @@
                      <div class="media-body">
                         <a href="">
                            <h4>Written by <%=blog.author %></h4>
-                           <h4>Posted on <%=blog.date%></h4>
+                           <h4>Posted on <%=new Date(blog.createdAt).toLocaleString()%></h4>
                         </a>
                      </div>
                   </div>

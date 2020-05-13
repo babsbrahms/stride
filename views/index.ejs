@@ -64,7 +64,7 @@
                                     <div class="single_post_text text-center">
                                         <a href="/category/<%=blog.category%>"><h5> <%=blog.category%></h5></a> 
                                         <a href="/blog/<%=blog._id%>"><h2><%=blog.title%></h2></a>
-                                        <p>Posted on <%=new Date(blog.date).toLocaleString()%> </p>
+                                        <p>Posted on <%=new Date(blog.createdAt).toLocaleString()%> </p>
                                     </div>
                                 </div>
                             </div>

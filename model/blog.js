@@ -10,7 +10,7 @@ var blog = new Schema({
     date: {  type: Date },
     body: { type: String },
     tags: { type: Array }
-})
+}, { timestamps: true })
 blog.index({ title: 'text', tags: 'text'})
 
 module.exports = mongoose.model('Blog', blog)

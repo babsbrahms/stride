@@ -10,7 +10,7 @@ var Blog = require('../model/blog')
 
 
 router.get('/', function(req, res, next) {
-    Blog.find({}).sort({ date: -1 }).exec(function (err, blogs) {
+    Blog.find({}).sort({ createdAt: -1 }).exec(function (err, blogs) {
         if (err) {
             res.locals.error = req.app.get('env') === 'development' ? err : {};
     
@@ -21,13 +21,13 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/create-posts', upload.single('poster'), function(req, res, next) {
-    const { title, author, category, date, body} = req.body;
+    const { title, author, category, body} = req.body;
 
 
     console.log(req.file);
     
     Blog.create({
-        title, author, category, date, body, poster: `/uploads/${req.file.filename}`
+        title, author, category, body, poster: `/uploads/${req.file.filename}`
     }).then((doc) => {
         console.log(doc);
         res.redirect('/cms')
@@ -58,10 +58,10 @@ router.get('/edit-post/:id', (req, res) => {
 
 router.post('/edit-post/:id', upload.single('poster'), (req, res) => {
     const {id } = req.params;
-    const { title, author, category, date, body, oldPoster} = req.body;
+    const { title, author, category, body, oldPoster} = req.body;
 
     Blog.updateOne({ _id: id}, { $set: { 
-        title, author, category, date, body, poster: (req.file && req.file.filename)? `/uploads/${req.file.filename}`: oldPoster
+        title, author, category, body, poster: (req.file && req.file.filename)? `/uploads/${req.file.filename}`: oldPoster
     }}).exec((err, blog) => {
         if (err) {
             res.locals.error = req.app.get('env') === 'development' ? err : {};

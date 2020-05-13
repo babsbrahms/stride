@@ -57,15 +57,6 @@ router.post('/addcomment', (req, res) => {
 })
 
 /* GET searchpage. */
-router.get('/search', function(req, res, next) {
-  let { search } = req.query;
-  console.log(req.query);
-  
-  Blog.find({ $text: {$search : search }}, (err, result) => {
-    console.log(result);
-    
-    res.send({ result })
-  })
-});
+
 
 module.exports = router;

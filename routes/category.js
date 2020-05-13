@@ -7,7 +7,7 @@ var Blog = require('../model/blog')
 router.get('/:name', function(req, res, next) {
   const {name} = req.params;
 
-  Blog.find({ category: name }).sort({ date: -1 }).exec(function (err, blogs) {
+  Blog.find({ category: name }).sort({ createdAt: -1 }).exec(function (err, blogs) {
     Blog.distinct('category').exec((errs, categories) => {
       if (err || errs) {
         res.locals.error = req.app.get('env') === 'development' ? err||errs : {};
