@@ -13,5 +13,28 @@
   if (document.getElementById('default-select')) {
 		$('select').niceSelect();
   }
+
+  let search = document.getElementById('search')
+  let searchForm = document.getElementById('header-search-form');
+
+  searchForm.onsubmit = function searchHeaderBlog () {
+   
+    console.log('word: ', search.value);
+
+    fetch(`/blog/search?search=${search.value}`, {
+      method: 'GET'
+    })
+    .then(res => res.json())
+    .then(res =>{
+        console.log(res);
+        text =+ `<li></li>`
+    })
+    .catch(err => {
+
+    })
+    return false;
+    
+  }
+
   
 }(jQuery));

@@ -2,12 +2,32 @@
                         <div class="single_sidebar_wiget search_form_widget">
                             <form action="#">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder='Search Keyword'
+                                    <input id="sidebar-search-input" type="text" class="form-control" placeholder='Search Keyword'
                                         onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Keyword'">
-                                    <div class="btn_1">search</div>
+                                    <div id='sidebar-search-btn' class="btn_1">search</div>
                                 </div>
                             </form>
                         </div>
+                        <script>
+                            let searchBtn= document.getElementById('sidebar-search-btn')
+                            let searchInput = document.getElementById('sidebar-search-input')
+                            searchBtn.addEventListener('click', (e) => {
+
+                                fetch(`/blog/search?search=${searchInput.value}`, {
+                                    method: 'GET'
+                                })
+                                .then(res => res.json())
+                                .then(res =>{
+                                    console.log(res);
+                                })
+                                .catch(err => {
+
+                                })
+                                
+
+                            })
+
+                        </script>
                         <div class="single_sidebar_wiget">
                             <div class="sidebar_tittle">
                                 <h3>Categories</h3>
@@ -63,7 +83,7 @@
                             </div>
                         </div> -->
                         
-                        <div class="single_sidebar_wiget">
+                        <!-- <div class="single_sidebar_wiget">
                             <div class="sidebar_tittle">
                                 <h3>Share this post</h3>
                             </div>
@@ -75,5 +95,5 @@
                                     <li><a target="_blank" href="#"><i class="ti-instagram"></i></a></li>
                                 </ul>
                             </div>
-                        </div>
+                        </div> -->
                     </div>

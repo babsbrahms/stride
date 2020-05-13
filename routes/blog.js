@@ -3,6 +3,7 @@ var router = express.Router();
 
 var Blog = require('../model/blog')
 
+
 /* GET users listing. */
 router.get('/:id', function(req, res, next) {
   const { id } = req.params;
@@ -23,6 +24,18 @@ router.get('/:id', function(req, res, next) {
       })
     }
 
+  })
+});
+
+/* GET searchpage. */
+router.get('/search', function(req, res, next) {
+  let { search } = req.query;
+  console.log(search);
+  
+  Blog.find({ $text: {$search : search }}, (err, result) => {
+    console.log(result);
+    
+    res.send({ result })
   })
 });
 

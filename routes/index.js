@@ -19,11 +19,4 @@ router.get('/', function(req, res, next) {
 });
 
 
-/* GET searchpage. */
-router.get('/', function(req, res, next) {
-  Blog.find({ $text: {$search : '' }}, (err, result) => {
-    res.send({ result })
-  })
-});
-
 module.exports = router;
