@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+const { check, validationResult } = require('express-validator');
 
 var Blog = require('../model/blog')
 
@@ -14,7 +15,7 @@ router.get('/:name', function(req, res, next) {
 
         res.render('error', { page: 'Blog', message: err.message|| errs.message });
       }
-      res.render('category', { page: 'Category', blogs, categories });
+      res.render('category', { page: 'Category', blogs, categories, msg: req.flash('msg'), errors: req.flash('errors')  });
     })
   })
 });

@@ -6,12 +6,25 @@ var Contact = require('../model/contact')
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   
-  res.render('contact', { page: 'Contact' })
+  res.render('contact', { page: 'Contact', msg: req.flash('msg'), errors: req.flash('errors')  })
 });
 
-router.post('/', function(req, res) {
+router.post('/',[
+  check('email').isEmail().withMessage('Email field is required!'), 
+  check('message').notEmpty().withMessage('Message field is required'),
+  check('name').notEmpty().withMessage('Name field is required'),
+  check('subject').notEmpty().withMessage('Subject field is required')
+], function(req, res) {
     const { message, name, email, subject } = req.body;
     
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      req.flash('errors', errors.array() )
+
+      return res.redirect(req.get('referer'))
+    }
+
     let contact = new Contact()
     contact.message = message;
     contact.name = name;
@@ -26,7 +39,7 @@ router.post('/', function(req, res) {
       } 
       console.log(msg);
       
-      req.flash('message', 'Thank you for contacting us. We will contact you soon.')
+      req.flash('msg', 'Thank you for contacting us. We will contact you soon.')
       res.redirect('/contact')
     })
 

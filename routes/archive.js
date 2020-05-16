@@ -12,7 +12,7 @@ router.get('/', function(req, res, next) {
 
         res.render('error', { page: 'Blog', message: err.message|| errs.message });
       }
-      res.render('archive', { page: 'Archive', blogs, categories });
+      res.render('archive', { page: 'Archive', blogs, categories, msg: req.flash('msg'), errors: req.flash('errors')  });
     })
   })
 });

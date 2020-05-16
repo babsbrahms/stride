@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var multer = require('multer');
+const { check, validationResult } = require('express-validator');
 
 var upload = multer({ dest: './public/uploads/' })
 
@@ -16,21 +17,32 @@ router.get('/', function(req, res, next) {
     
             res.render('error', { page: 'CMS' });
         }
-        res.render('cms', { page: 'CMS', blogs})
+        res.render('cms', { page: 'CMS', blogs, msg: req.flash('msg'), errors: req.flash('errors') })
     })
 });
 
-router.post('/create-posts', upload.single('poster'), function(req, res, next) {
+router.post('/create-posts', upload.single('poster'), [
+    check('title', 'Title field is required').notEmpty(),
+    check('author', 'Author field is required').notEmpty(),
+    check('category', 'Category field is required').notEmpty(),
+    check('body', 'Body field is required').notEmpty()
+], function(req, res, next) {
     const { title, author, category, body} = req.body;
 
+    const errors = validationResult(req);
 
-    console.log(req.file);
+    if (!errors.isEmpty()) {
+      req.flash('errors', errors.array() )
+
+      return res.redirect('/cms')
+    }
     
     Blog.create({
         title, author, category, body, poster: `/uploads/${req.file.filename}`
     }).then((doc) => {
         console.log(doc);
-        res.redirect('/cms')
+        req.flash('msg', 'Blog created')
+        res.redirect(`/blog/${doc._id}`)
     })
     .catch((err) => {
         res.locals.error = req.app.get('env') === 'development' ? err : {};
@@ -51,15 +63,30 @@ router.get('/edit-post/:id', (req, res) => {
     
             res.render('error', { page: 'Blog', message: err.message});
         }
-        res.render('editblog', { page: 'Edit Post', blog})
+        res.render('editblog', { page: 'Edit Post', blog, msg: req.flash('msg'), errors: req.flash('errors') })
     })
 })
 
 
-router.post('/edit-post/:id', upload.single('poster'), (req, res) => {
-    const {id } = req.params;
+router.post('/edit-post/:id', upload.single('poster'), function (req, res) {
+    const { id } = req.params;
     const { title, author, category, body, oldPoster} = req.body;
 
+    // const errors = validationResult(req);
+
+    // [  
+    //     check('title', 'Title field is required').notEmpty,
+    //     check('author', 'Author field is required').notEmpty(),
+    //     check('category', 'Category field is required').notEmpty(),
+    //     check('body', 'Body field is required').notEmpty()
+    //     ]
+    // if (!errors.isEmpty()) {
+    //   req.flash('errors', errors.array() )
+    // console.log('error: ',  errors.array());
+    
+    //   return res.redirect(`/edit-post/${id}`)
+    // }
+    
     Blog.updateOne({ _id: id}, { $set: { 
         title, author, category, body, poster: (req.file && req.file.filename)? `/uploads/${req.file.filename}`: oldPoster
     }}).exec((err, blog) => {
@@ -68,6 +95,7 @@ router.post('/edit-post/:id', upload.single('poster'), (req, res) => {
     
             res.render('error', { page: 'Blog', message: err.message});
         } else {
+            req.flash('msg', 'Blog successfully edited')
             res.redirect(`/blog/${id}`)
         }
         
