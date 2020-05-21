@@ -1,22 +1,21 @@
-<%- include partials/head.ejs %>
 
+<%- include partials/head %>
 <body>
     <!--::header part start::-->
-    <%- include partials/header.ejs %>
+    <div style="height: 100px;"></div>
+    <%- include partials/header %>
     <!-- Header part end-->
 
     <!-- breadcrumb start-->
-    <section class="breadcrumb breadcrumb_bg align-items-center">
+    <section class="breadcrumb breadcrumb_bg">
         <div class="container">
-            <div class="row align-items-center justify-content-between">
-                <div class="col-sm-6">
-                    <div class="breadcrumb_tittle text-left">
-                        <h2>Category Page</h2>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="breadcrumb_content text-right">
-                        <p>Home<span>/</span>Category Page</p>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb_iner text-center">
+                        <div class="breadcrumb_iner_item">
+                            <h2>Category</h2>
+                            <p>Home<span>-</span>Category</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -24,53 +23,70 @@
     </section>
     <!-- breadcrumb start-->
 
-    <!-- feature_post start-->
-    <section class="all_post section_padding">
+
+    <!--================Blog Area =================-->
+    <section class="blog_area section_padding">
         <div class="container">
             <div class="row">
-                <div class="col-lg-8">
-                    <div class="row">
-                        <%blogs.forEach(function(blog, index){%>
-                            <div class="<%if(index === 0) {%> col-lg-12 <%} else{%>col-lg-6 col-sm-6 <%}%>">
-                                <div class="single_post post_1 feature_post">
-                                    <div class="single_post_img">
-                                        <img src="<%=blog.poster%>" alt="">
-                                    </div>
-                                    <div class="single_post_text text-center">
-                                        <a href="/category/<%=blog.category%>"><h5> <%=blog.category%></h5></a> 
-                                        <a href="/blog/<%=blog._id%>"><h2><%=blog.title%></h2></a>
-                                        <p>Posted on <%=new Date(blog.createdAt).toLocaleString()%></p>
-                                    </div>
-                                </div>
+                <div class="col-lg-8 mb-5 mb-lg-0">
+                    <div class="blog_left_sidebar">
+                        <%blogs.forEach(function(blog) {%> 
+                        <article class="blog_item">
+                            <div class="blog_item_img">
+                                <img class="card-img rounded-0" src="<%=blog.poster%>" alt="">
+                                <a href="#" class="blog_item_date">
+                                    <h3><%=new Date(blog.createdAt).toLocaleDateString() %></h3>
+                                </a>
                             </div>
+
+                            <div class="blog_details">
+                                <a class="d-inline-block" href="/blog/<%=blog._id%>">
+                                    <h2><%=blog.title%></h2>
+                                </a>
+                                <p><%=blog.snippet%></p>
+                                <ul class="blog-info-link">
+                                    <li><a href="#"><i class="far fa-user"></i><%=blog.category%></a></li>
+                                    
+                                </ul>
+                            </div>
+                        </article>
                         <%})%>
+
+                        <nav class="blog-pagination justify-content-center d-flex">
+                            <ul class="pagination">
+                                <li class="page-item">
+                                    <a href="#" class="page-link" aria-label="Previous">
+                                        <i class="ti-angle-left"></i>
+                                    </a>
+                                </li>
+                                <li class="page-item">
+                                    <a href="#" class="page-link">1</a>
+                                </li>
+                                <li class="page-item active">
+                                    <a href="#" class="page-link">2</a>
+                                </li>
+                                <li class="page-item">
+                                    <a href="#" class="page-link" aria-label="Next">
+                                        <i class="ti-angle-right"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
                     </div>
                 </div>
                 <div class="col-lg-4">
-                    <%- include partials/sidebar.ejs %>
+                    <%- include partials/sidebar %>
                 </div>
             </div>
         </div>
     </section>
-    <!-- feature_post end-->
+    <!--================Blog Area =================-->
 
-    <!-- social_connect_part part start-->
-    <%- include partials/social.ejs %>
-    <!-- social_connect_part part end-->
-
-    <!-- footer part start-->
-    <%- include partials/footer.ejs %>
+   <!-- footer part start-->
+   <%- include partials/footer %>
     <!-- footer part end-->
 
-    <!-- jquery plugins here-->
-    <!-- jquery -->
-    <script src="js/jquery-1.12.1.min.js"></script>
-    <!-- popper js -->
-    <script src="js/popper.min.js"></script>
-    <!-- bootstrap js -->
-    <script src="js/bootstrap.min.js"></script>
-    <!-- custom js -->
-    <script src="js/custom.js"></script>
+
 </body>
 
 </html>

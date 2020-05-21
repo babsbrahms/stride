@@ -77,7 +77,7 @@
       border: 0px solid transparent;
       position: relative;
       margin-bottom: 20px;
-
+     
       .card-body {
         display: inline-block;
         background-color: rgba(255, 255, 255, .7);
@@ -88,11 +88,16 @@
         opacity: 0;
         visibility: hidden;
         @include transform_time(.5s);
-
+        &:hover{
+          h5{
+            color: $btn_bg;
+          }
+        }
         h5 {
           font-size: 20px;
           font-weight: 600;
           margin-bottom: 4px;
+          @include transform_time(.5s);
         }
       }
 

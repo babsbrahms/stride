@@ -23,7 +23,8 @@ router.get('/', function(req, res, next) {
 
 router.post('/newsletter' , [ check('email').isEmail().withMessage('Email is required')], (req, res) => {
   const { email, name } = req.body;
-
+  console.log({ email, name });
+  
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {

@@ -9,7 +9,7 @@ var session = require('express-session');
 
 var indexRouter = require('./routes/index');
 var contactRouter = require('./routes/contact');
-var archiveRouter = require('./routes/archive');
+var aboutRouter = require('./routes/about');
 var blogRouter = require('./routes/blog');
 var categoryRouter = require('./routes/category');
 var csmRouter = require('./routes/cms')
@@ -22,7 +22,7 @@ app.set('view engine', 'ejs');
 
 // mongodb
 // mongoose
-mongoose.connect('mongodb://localhost:27017/prepventblog', {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
+mongoose.connect('mongodb://localhost:27017/strideinc', {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
 let mdb = mongoose.connection;
 
 mdb.once('open', () => {
@@ -54,7 +54,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/contact', contactRouter);
-app.use('/archive', archiveRouter);
+app.use('/about', aboutRouter);
 app.use('/blog', blogRouter);
 app.use('/category', categoryRouter);
 app.use('/cms', csmRouter)

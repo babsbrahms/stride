@@ -1,22 +1,21 @@
 
-<%- include ./partials/head %>
+<%- include partials/head %>
 <body>
     <!--::header part start::-->
-    <%- include partials/header.ejs %>
+    <div style="height: 100px;"></div>
+    <%- include partials/header %>
     <!-- Header part end-->
 
     <!-- breadcrumb start-->
-    <section class="breadcrumb breadcrumb_bg align-items-center">
+    <section class="breadcrumb breadcrumb_bg">
         <div class="container">
-            <div class="row align-items-center justify-content-between">
-                <div class="col-sm-6">
-                    <div class="breadcrumb_tittle text-left">
-                        <h2>blog details</h2>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="breadcrumb_content text-right">
-                        <p>Home<span>/</span>blog details</p>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb_iner text-center">
+                        <div class="breadcrumb_iner_item">
+                            <h2>Blog Single</h2>
+                            <p>Home<span>-</span>Blog Single</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -24,70 +23,121 @@
     </section>
     <!-- breadcrumb start-->
    <!--================Blog Area =================-->
-   <%if (blog) {%>
-   <section class="blog_area single-post-area all_post section_padding">
+   <section class="blog_area single-post-area section_padding">
       <div class="container">
          <div class="row">
             <div class="col-lg-8 posts-list">
                <div class="single-post">
-                  <h2 class="text-center"><%=blog.title%></h2>
-                  <h5 style="color: #5e5a58;" class="text-center"><%=blog.category%></h5>
-                  <div class="feature-img d-flex flex-row justify-content-center">
+                  <div class="feature-img">
                      <img class="img-fluid" src="<%=blog.poster%>" alt="">
                   </div>
-                  <div data-body="<%=blog.body%>" id="blog_body" class="blog_details">
-                     
-                  </div>
-               </div>
-             
-               <div class="blog-author">
-                  <div class="media align-items-center">
-                     <img src="img/blog/author.png" alt="">
-                     <div class="media-body">
-                        <a href="">
-                           <h4>Written by <%=blog.author %></h4>
-                           <h4>Posted on <%=new Date(blog.createdAt).toLocaleString()%></h4>
-                        </a>
+                  <div class="blog_details">
+                     <h2><%=blog.title%></h2>
+                     <ul class="blog-info-link mt-3 mb-4">
+                        <li><a href="/category/<%=blog.category%>"><i class="far fa-user"></i><%=blog.category%></a></li>
+                     </ul>
+                     <div data-body="<%=blog.body%>" id="blog_body">
+                        <%=blog.body%>
                      </div>
                   </div>
                </div>
-               <%if (comments.length >0 ) {%>
+               <div class="navigation-top">
+                  <div class="d-sm-flex justify-content-between text-center">
+                     <div class="col-sm-4 text-center my-2 my-sm-0">
+                        <!-- <p class="comment-count"><span class="align-middle"><i class="far fa-comment"></i></span> 06 Comments</p> -->
+                     </div>
+                     <ul class="social-icons">
+                        <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                        <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                        <li><a href="#"><i class="fab fa-dribbble"></i></a></li>
+                        <li><a href="#"><i class="fab fa-behance"></i></a></li>
+                     </ul>
+                  </div>
+                  <!-- <div class="navigation-area">
+                     <div class="row">
+                        <div
+                           class="col-lg-6 col-md-6 col-12 nav-left flex-row d-flex justify-content-start align-items-center">
+                           <div class="thumb">
+                              <a href="#">
+                                 <img class="img-fluid" src="img/post/preview.png" alt="">
+                              </a>
+                           </div>
+                           <div class="arrow">
+                              <a href="#">
+                                 <span class="lnr text-white ti-arrow-left"></span>
+                              </a>
+                           </div>
+                           <div class="detials">
+                              <p>Prev Post</p>
+                              <a href="#">
+                                 <h4>Space The Final Frontier</h4>
+                              </a>
+                           </div>
+                        </div>
+                        <div
+                           class="col-lg-6 col-md-6 col-12 nav-right flex-row d-flex justify-content-end align-items-center">
+                           <div class="detials">
+                              <p>Next Post</p>
+                              <a href="#">
+                                 <h4>Telescopes 101</h4>
+                              </a>
+                           </div>
+                           <div class="arrow">
+                              <a href="#">
+                                 <span class="lnr text-white ti-arrow-right"></span>
+                              </a>
+                           </div>
+                           <div class="thumb">
+                              <a href="#">
+                                 <img class="img-fluid" src="img/post/next.png" alt="">
+                              </a>
+                           </div>
+                        </div>
+                     </div>
+                  </div> -->
+               </div>
+               <div class="blog-author">
+                  <div class="media align-items-center">
+                     <img src="/img/blog/author.png" alt="">
+                     <div class="media-body">
+                        <a>
+                           <h4><%=blog.author%></h4>
+                        </a>
+                        <p><%=new Date(blog.createdAt).toLocaleDateString() %></p>
+                     </div>
+                  </div>
+               </div>
                <div class="comments-area">
-                  <%comments.forEach(function(comment) {%>
+                  <h4>Comments</h4>
+                  <%comments.forEach(function(comment) {%> 
                   <div class="comment-list">
                      <div class="single-comment justify-content-between d-flex">
-                        
                         <div class="user justify-content-between d-flex">
+                           <!-- <div class="thumb">
+                              <img src="img/comment/comment_1.png" alt="">
+                           </div> -->
                            <div class="desc">
                               <p class="comment">
-                              <%=comment.comment%>
+                                 <%=comment.comment%>
                               </p>
                               <div class="d-flex justify-content-between">
                                  <div class="d-flex align-items-center">
                                     <h5>
-                                       <a href="#"><%=comment.name%></a>
+                                       <p><%=comment.comment%></p>
                                     </h5>
-                                    <p class="date">
-                                       <!-- December 4, 2017 at 3:12 pm  -->
-                                       
-                                       <%=new Date(comment.createdAt).toLocaleString()%>
-                                    </p>
+                                    <p class="date"><%=new Date(comment.createdAt).toLocaleDateString() %> </p>
                                  </div>
-                                 <!-- <div class="reply-btn">
-                                    <a href="#" class="btn-reply text-uppercase">reply</a>
-                                 </div> -->
                               </div>
                            </div>
                         </div>
-                        
                      </div>
                   </div>
                   <%})%>
                </div>
-               <%}%>
                <div class="comment-form">
                   <h4>Leave a Reply</h4>
-                  <form data-id="<%=blog._id %>" class="form-contact comment_form" id="commentForm">
+                  <form data-id="<%=blog._id%>" id="commentForm" method="POST" action="/blog/addcomment" class="form-contact comment_form">
+                     <input type="hidden" value="<%=blog._id%>" name="blog" />
                      <div class="row">
                         <div class="col-12">
                            <div class="form-group">
@@ -97,7 +147,7 @@
                         </div>
                         <div class="col-sm-6">
                            <div class="form-group">
-                              <input class="form-control" name="display-name" id="display-name" type="text" placeholder="Name">
+                              <input class="form-control" name="name" id="name" type="text" placeholder="Name">
                            </div>
                         </div>
                         <div class="col-sm-6">
@@ -111,96 +161,87 @@
                            </div>
                         </div>
                      </div>
-                     <h3 style="color: crimson;" id="comment-error"></h3>
-                     <div id="comment-submit-btn" class="load_btn">
-                        <a class="btn_1">SUBMIT </a>
+                     <h2 id="comment-error" style="color: red;"></h2>
+                     <div class="form-group">
+                        <button id="comment-submit-btn" type="submit" class="button button-contactForm btn_1">Send Message</button>
                      </div>
                   </form>
                </div>
             </div>
             <div class="col-lg-4">
-               <%- include partials/sidebar.ejs %>
+               <%- include partials/sidebar %>
             </div>
          </div>
       </div>
    </section>
-   <%} else{%>
-      <section class="blog_area single-post-area all_post section_padding">
-         <div class="container">
-            <h1>Blog Not found</h1>
-         </div>
-      </section>  
-   <%}%>
    <!--================Blog Area end =================-->
 
-     <!-- footer part start-->
-     <%- include partials/footer.ejs %>
-    <!-- footer part end-->
+   <!-- footer part start-->
+      <%- include partials/footer %>
+     <!-- footer part end-->
 
-      <!-- jquery plugins here-->
-      <script src="/js/jquery-1.12.1.min.js"></script>
-      <!-- popper js -->
-      <script src="/js/popper.min.js"></script>
-      <!-- bootstrap js -->
-      <script src="/js/bootstrap.min.js"></script>
-      <!-- custom js -->
-      <script src="/js/custom.js"></script>
+     <script>
+      // var commentForm = document.getElementById('commentForm');
+      // var blog = commentForm .getAttribute('data-id')
+      // var comment = commentForm ['comment'];
+      // var email = commentForm ['email'];
+      // var displayname = commentForm ['display-name']
+      // var website = commentForm ['website']
 
-      <script>
-         var commentForm = document.getElementById('commentForm');
-         var blog = commentForm .getAttribute('data-id')
-         var comment = commentForm ['comment'];
-         var email = commentForm ['email'];
-         var displayname = commentForm ['display-name']
-         var website = commentForm ['website']
+      var button = document.getElementById('comment-submit-btn')
 
-         var button = document.getElementById('comment-submit-btn')
+      let bodyDiv = document.getElementById('blog_body');
 
-         let bodyDiv = document.getElementById('blog_body');
-
-         console.log(bodyDiv);
-         
-         document.onreadystatechange = function (e) {
-            if (document.readyState === 'complete') {
-               let text = bodyDiv.getAttribute('data-body');
-               console.log(text);
-               bodyDiv.innerHTML= text;
-            }
-            
-         }
-
-         button.onclick = function(e) {
-            console.log({ comment: comment.value, blog, email: email.value, name: displayname.value, website: website.value });
-
-            if ((comment.value === '') || (displayname.value === '') ){
-               
-               document.getElementById('comment-error').innerHTML = 'Comment and Name are required'
-            } else {
-
-               document.getElementById('comment-error').innerHTML = ''
-               fetch('/blog/addcomment', {
-                  method: 'POST',
-                  body: JSON.stringify({
-                     comment: comment.value, blog, email: email.value, name: displayname.value, website: website.value
-                  }),
-                  headers: {
-                     'Content-Type': 'application/json'
-                  }
-               })
-               .then((res) => res.json())
-               .then(()=> {
-                  window.location.reload()
-               })
-               .catch((error)=> {
-                  console.log(error);
-                  
-               })
-            }
-
-         }
-         
       
-      </script>
-</body>
+      document.onreadystatechange = function (e) {
+         if (document.readyState === 'complete') {
+            let text = bodyDiv.getAttribute('data-body');
+            console.log(text);
+            bodyDiv.innerHTML= text;
+         }
+         
+      }
+      // button.onclick = submitForm();
+      // commentForm.onsubmit = function (e) {
+      //    e.preventDefault();
+      //    submitForm(e);
+      //    return false;
+      // }
 
-</html>
+      function submitForm (e) {
+         console.log({ comment: comment.value, blog, email: email.value, name: displayname.value, website: website.value });
+
+         if ((comment.value === '') || (displayname.value === '') ){
+            
+            document.getElementById('comment-error').innerHTML = 'Comment and Name fields are required!!!'
+         } else {
+
+            document.getElementById('comment-error').innerHTML = ''
+            fetch('/blog/addcomment', {
+               method: 'POST',
+               body: JSON.stringify({
+                  comment: comment.value, blog, email: email.value, name: displayname.value, website: website.value
+               }),
+               headers: {
+                  'Content-Type': 'application/json'
+               }
+            })
+            .then((res) => res.json())
+            .then(()=> {
+               window.location.reload()
+            })
+            .catch((error)=> {
+               console.log(error);
+               
+            })
+         }
+
+      }
+      
+   
+   </script>
+
+
+ </body>
+ 
+ </html>

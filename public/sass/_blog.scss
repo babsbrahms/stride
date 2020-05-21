@@ -11,16 +11,16 @@
         color: $font_1 !important;
         text-decoration: none;
         @include transform_time(.5s);
+        &:hover, :hover{
+            background: -webkit-linear-gradient( 131deg, #feb47b 0%, #ff7e5f 99%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+            @include transform_time(.5s);
+        }
     }
 }
-.load_btn {
-    margin-top: 0px !important;
-    .btn_1{
-        
-        color: $white_color !important;
-    }
-   
-}
+
 .single-blog {
     overflow: hidden;
     margin-bottom: 30px;
@@ -517,9 +517,7 @@
 
 /*============ blog_left_sidebar css ==============*/
 .blog_area {
-   .load_btn{
-       margin-top: 60px !important;
-   }
+    // background: $lightGray;
 }
 
 .blog_left_sidebar {}
@@ -604,7 +602,7 @@
         left: 10px;
         display: block;
         color: $white_color;
-        background-color: $btn_bg;
+        background-color: #ff7e5f;
         padding: 8px 15px;
         border-radius: 5px;
 
@@ -804,7 +802,7 @@
 
                     // color: $title_color;
                     &:hover {
-                        color: $btn_bg;
+                        color: $white_color;
                     }
 
                 }
@@ -826,7 +824,7 @@
         ul {
             li {
                 display: inline-block;
-
+                
                 a {
                     display: inline-block;
                     border: 1px solid #eeeeee;
@@ -840,7 +838,11 @@
 
                     &:hover {
                         background: $btn_bg;
-                        color: #fff;
+                        color: #fff !important;
+                        -webkit-text-fill-color: #fff;
+                        text-decoration: none;
+                        -webkit-transition: 0.5s;
+                        transition: 0.5s;
                     }
                 }
             }
@@ -1406,6 +1408,7 @@
     border-top: 1px solid #eee;
     padding-top: 45px;
     margin-top: 50px;
+    margin-bottom: 20px;
 
     .form-group {
         margin-bottom: 30px;

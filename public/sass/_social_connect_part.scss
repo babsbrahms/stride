@@ -1,6 +1,18 @@
 /**************** social contact part css start ****************/
 .social_connect_part{
-    overflow: hidden;
+    padding-top: 130px;
+    @media #{$small_mobile}{
+        padding-top: 70px;
+    }
+    @media #{$large_mobile}{
+        padding-top: 70px;
+    }
+    @media #{$tab_device}{
+        padding-top: 70px;
+    }
+    @media #{$medium_device}{
+        padding-top: 70px;
+    }
     .container-fluid{
         padding-left: 0px;
         padding-right: 0px;
@@ -8,16 +20,11 @@
     .social_connect{
         display: flex;
         justify-content: space-between;
-        @media #{$small_mobile}{
-            display: inline-block;
-        }
+        border-bottom: 10px solid $white_color;
     }
     .single-social_connect{
-        width: 16.67%;
+        width: 16%;
         float: left;
-        @media #{$small_mobile}{
-            width: 50%;
-        }
         &:hover{
             .social_connect_img:after{
                 opacity: 0.5;

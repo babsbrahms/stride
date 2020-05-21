@@ -21,25 +21,146 @@
 		
 	}
 }
+.dropdown {
+    .dropdown-menu {
+        transition: all 0.5s;
+        overflow: hidden;
+        transform-origin: top center;
+        transform: scale(1,0);
+		display: block;
+		margin-top: 28px;
+    }
+    &:hover {
+        .dropdown-menu {
+            transform: scale(1);
+        }
+    }
+}
 .btn_1{
 	display: inline-block;
-	padding: 14.5px 58px;
+	padding: 14px 40px;
+	border-radius: 50px;
+	@extend %custom_btn_bg_1;
 	font-size: 14px;
 	color: $white_color;
     -o-transition: all .4s ease-in-out;
     -webkit-transition: all .4s ease-in-out;
     transition: all .4s ease-in-out;
 	text-transform: capitalize;
-	background-color: $btn_bg;
-	margin: 0 auto;
+	margin-top: 45px;
+	background-size: 300% 100%;
 	&:hover{
 		color: $white_color !important;
-		background-color: #2a2a2a;
+		background-size: 100% 100%;
 
+	}
+	@media #{$small_mobile}{
+		padding: 14px 30px;
+		margin-top: 25px;
+	}
+	@media #{$large_mobile}{
+		padding: 14px 30px;
+		margin-top: 30px;
+	}
+	@media #{$tab_device}{
+		padding: 14px 30px;
+		margin-top: 30px;
+	}
+	@media #{$medium_device}{
+	
+	}
+
+}
+.btn_2{
+	display: inline-block;
+	padding: 13px 47px;
+    box-shadow: 0px 12px 20px 0px rgba(255, 126, 95, 0.15);
+	font-size: 14px;
+	color: $white_color;
+	text-transform: capitalize;
+	@extend %custom_btn_bg_2;
+	@include transform_time(.5s);
+	border-radius: 50px;
+	margin-top: 45px;
+	background-size: 300% 100%;
+	&:hover{
+		color: $white_color !important;
+		background-size: 100% 100%;
+
+	}
+	@media #{$small_mobile}{
+		padding: 14px 30px;
+		margin-top: 25px;
+	}
+	@media #{$large_mobile}{
+		padding: 14px 30px;
+		margin-top: 30px;
+	}
+	@media #{$tab_device}{
+		padding: 14px 30px;
+		margin-top: 30px;
+	}
+	@media #{$medium_device}{
+	
+	}
+}
+.btn_4{
+	display: inline-block;
+	padding: 13px 47px;
+    box-shadow: 0px 12px 20px 0px rgba(255, 126, 95, 0.15);
+	font-size: 14px;
+	color: $white_color;
+	text-transform: capitalize;
+	@extend %custom_btn_bg_2;
+	@include transform_time(.5s);
+	border-radius: 50px;
+	background-size: 300% 100%;
+	&:hover{
+		color: $white_color;
+		background-size: 100% 100%;
+
+	}
+	@media #{$small_mobile}{
+		padding: 14px 30px;
+	}
+	@media #{$large_mobile}{
+		padding: 14px 30px;
+	}
+	@media #{$tab_device}{
+		padding: 14px 30px;
+	}
+	@media #{$medium_device}{
+	
+	}
+}
+.btn_3 {
+	position: relative;
+    font-weight: 500;
+    color: #2f373d;
+    display: inline-block;
+    z-index: 9;
+    -webkit-transition: .6s;
+    transition: .6s;
+	line-height: 46px;
+    padding-left: 30px;
+	margin-top: 35px;
+	font-family: $font_stack_2;
+	&:after{
+		height: 48px;
+		width: 61px;
+		background-color: #e3f1da;
+		position: absolute;
+		content: "";
+		top: 0px;
+		left: 0px;
+		border-radius: 5px;
+		z-index: -1;
+		-webkit-transition: .6s;
+		transition: .6s;
 	}
 	i{
 		font-size: 12px;
-		padding-left: 10px;
+		margin-left: 11px;
 	}
 }
 /*=================== custom button rule start ====================*/

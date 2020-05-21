@@ -1,124 +1,198 @@
-                    <div class="sidebar_widget">
-                        <div class="single_sidebar_wiget search_form_widget">
-                            <form id="sidebar-search-form" autocomplete="on">
-                                <div class="form-group">
-                                    <input id="sidebar-search-input" type="text" class="form-control" placeholder='Search Keyword'
-                                        onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Keyword'">
-                                        <ul class="list-group" id="sidebar-search-ul"></ul>
-                                    <div id='sidebar-search-btn' class="btn_1">search</div>
-                                </div>
-                            </form>
-                            
-                        </div>
-                        <script>
-                            let searchBtn= document.getElementById('sidebar-search-btn')
-                            let searchInput = document.getElementById('sidebar-search-input');
-                            let form = document.getElementById('sidebar-search-form')
-                            searchBtn.addEventListener('click', searchBlog)
-
-                            form.onsubmit = function (e) {
-                                e.preventDefault;
-                                console.log('hi');
-                                searchBlog(e)
-                                return false;
-                            }
-
-                            function searchBlog (e) {
-                                e.preventDefault()
-                                fetch(`/search?search=${searchInput.value}`, {
-                                    method: 'GET'
-                                })
-                                .then(res => res.json())
-                                .then(res =>{
-
-                                    let Card = ''
-                                    res.result.forEach(element => 
-                                        Card += `<li class="list-group-item text-center"> <a href="/blog/${element._id}">${element.title} </a></li>`
-                                    );
-                                    
-                                    document.getElementById('sidebar-search-ul').innerHTML = Card ;
-                                })
-                                .catch(err => {
-
-                                })
-
-                               
-                            }
-
-                            searchInput.onkeyup = function (e) {
-                                
-                                if (e.target.value <= 1) {
-                                    document.getElementById('sidebar-search-ul').innerHTML = ''
-                                }
-                            }
-
-                        </script>
-                        <div class="single_sidebar_wiget">
-                            <div class="sidebar_tittle">
-                                <h3>Categories</h3>
-                            </div>
-                            <div class="single_catagory_item category">
-                                <ul class="list-unstyled">
-                                    <%categories.forEach(function(category){%> 
-                                        <li><a style="width: 100%;" href="/category/<%=category%>"><%=category%></a></li>
-                                    <%})%>
-                                </ul>
-                            </div>
-                        </div>
-                        <!-- <div class="single_sidebar_wiget">
-                            <div class="sidebar_tittle">
-                                <h3>Popular Feeds</h3>
-                            </div>
-                            <div class="single_catagory_post post_2 ">
-                                <div class="category_post_img">
-                                    <img src="img/sidebar/sidebar_1.png" alt="">
-                                </div>
-                                <div class="post_text_1 pr_30">
-                                    <a href="single-blog.html">
-                                        <h3>Subdue lesser beast winged
-                                            bearing meat tree one</h3>
-                                    </a>
-                                    <p><span> By Michal</span> / March 30</p>
-                                </div>
-                            </div>
-                            <div class="single_catagory_post post_2 ">
-                                <div class="category_post_img">
-                                    <img src="img/sidebar/sidebar_2.png" alt="">
-                                </div>
-                                <div class="post_text_1 pr_30">
-                                    
-                                    <a href="single-blog.html">
-                                        <h3>Subdue lesser beast winged
-                                            bearing meat tree one</h3>
-                                    </a>
-                                    <p><span> By Michal</span> / March 30</p>
-                                </div>
-                            </div>
-                            <div class="single_catagory_post post_2">
-                                <div class="category_post_img">
-                                    <img src="img/sidebar/sidebar_3.png" alt="">
-                                </div>
-                                <div class="post_text_1 pr_30">
-                                    <a href="single-blog.html">
-                                        <h3>Subdue lesser beast winged
-                                            bearing meat tree one</h3>
-                                    </a>
-                                    <p><span> By Michal</span> / March 30</p>
-                                </div>
-                            </div>
-                        </div> -->
-                        
-                        <!-- <div class="single_sidebar_wiget">
-                            <div class="sidebar_tittle">
-                                <h3>Share this post</h3>
-                            </div>
-                            <div class="social_share_icon tags">
-                                <ul class="list-unstyled">
-                                    <li><a target="_blank" href="#"><i class="ti-facebook"></i></a></li>
-                                    <li><a target="_blank" href="#"><i class="ti-twitter-alt"></i></a></li>
-                                    <li><a target="_blank" href="#"><i class="ti-pinterest"></i></a></li>
-                                    <li><a target="_blank" href="#"><i class="ti-instagram"></i></a></li>
-                                </ul>
-                            </div>
-                        </div> -->
+<div class="blog_right_sidebar">
+    <aside class="single_sidebar_widget search_widget">
+        <form id="sidebar-search-form">
+            <div class="form-group">
+                <div class="input-group mb-3">
+                    <input id="sidebar-search-input" type="text" class="form-control" placeholder='Search Keyword'
+                        onfocus="this.placeholder = ''"
+                        onblur="this.placeholder = 'Search Keyword'">
+                    <div class="input-group-append">
+                        <button id="sidebar-small-search-btn" class="btn" type="button"><i class="ti-search"></i></button>
                     </div>
+                </div>
+            </div>
+            <ul class="list-group" id="sidebar-search-ul"></ul>
+            <button id="sidebar-search-btn" class="button rounded-0 primary-bg text-white w-100 btn_4"
+                type="submit">Search</button>
+        </form>
+        <script>
+            let searchBtn= document.getElementById('sidebar-search-btn')
+            let smallBtn = document.getElementById('sidebar-small-search-btn')
+            let searchInput = document.getElementById('sidebar-search-input');
+            let form = document.getElementById('sidebar-search-form');
+
+            searchBtn.addEventListener('click', searchBlog);
+            smallBtn.addEventListener('click', searchBlog);
+
+            form.onsubmit = function (e) {
+                e.preventDefault;
+                console.log('hi');
+                searchBlog(e)
+                return false;
+            }
+
+            function searchBlog (e) {
+                e.preventDefault()
+                fetch(`/search?search=${searchInput.value}`, {
+                    method: 'GET'
+                })
+                .then(res => res.json())
+                .then(res =>{
+
+                    let Card = ''
+                    res.result.forEach(element => 
+                        Card += `<li class="list-group-item text-center"> <a href="/blog/${element._id}">${element.title} </a></li>`
+                    );
+                    
+                    document.getElementById('sidebar-search-ul').innerHTML = Card ;
+                })
+                .catch(err => {
+
+                })
+
+               
+            }
+
+            searchInput.onkeyup = function (e) {
+                
+                if (e.target.value <= 1) {
+                    document.getElementById('sidebar-search-ul').innerHTML = ''
+                }
+            }
+
+        </script>
+    </aside>
+
+    <aside class="single_sidebar_widget post_category_widget">
+        <h4 class="widget_title">Category</h4>
+        <ul class="list cat-list">
+            <%categories.forEach(function(category) {%> 
+                <li>
+                    <a href="/category/<%=category%>" class="d-flex">
+                        <p><%=category%></p>
+                    </a>
+                </li>
+            <%})%>
+        </ul>
+    </aside>
+
+    <!-- <aside class="single_sidebar_widget popular_post_widget">
+        <h3 class="widget_title">Recent Post</h3>
+        <div class="media post_item">
+            <img src="img/post/post_1.png" alt="post">
+            <div class="media-body">
+                <a href="single-blog.html">
+                    <h3>From life was you fish...</h3>
+                </a>
+                <p>January 12, 2019</p>
+            </div>
+        </div>
+        <div class="media post_item">
+            <img src="img/post/post_2.png" alt="post">
+            <div class="media-body">
+                <a href="single-blog.html">
+                    <h3>The Amazing Hubble</h3>
+                </a>
+                <p>02 Hours ago</p>
+            </div>
+        </div>
+        <div class="media post_item">
+            <img src="img/post/post_3.png" alt="post">
+            <div class="media-body">
+                <a href="single-blog.html">
+                    <h3>Astronomy Or Astrology</h3>
+                </a>
+                <p>03 Hours ago</p>
+            </div>
+        </div>
+        <div class="media post_item">
+            <img src="img/post/post_4.png" alt="post">
+            <div class="media-body">
+                <a href="single-blog.html">
+                    <h3>Asteroids telescope</h3>
+                </a>
+                <p>01 Hours ago</p>
+            </div>
+        </div>
+    </aside> -->
+    <!-- <aside class="single_sidebar_widget tag_cloud_widget">
+        <h4 class="widget_title">Tag Clouds</h4>
+        <ul class="list">
+            <li>
+                <a href="#">project</a>
+            </li>
+            <li>
+                <a href="#">love</a>
+            </li>
+            <li>
+                <a href="#">technology</a>
+            </li>
+            <li>
+                <a href="#">travel</a>
+            </li>
+            <li>
+                <a href="#">restaurant</a>
+            </li>
+            <li>
+                <a href="#">life style</a>
+            </li>
+            <li>
+                <a href="#">design</a>
+            </li>
+            <li>
+                <a href="#">illustration</a>
+            </li>
+        </ul>
+    </aside> -->
+
+
+    <!-- <aside class="single_sidebar_widget instagram_feeds">
+        <h4 class="widget_title">Instagram Feeds</h4>
+        <ul class="instagram_row flex-wrap">
+            <li>
+                <a href="#">
+                    <img class="img-fluid" src="img/post/post_5.png" alt="">
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img class="img-fluid" src="img/post/post_6.png" alt="">
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img class="img-fluid" src="img/post/post_7.png" alt="">
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img class="img-fluid" src="img/post/post_8.png" alt="">
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img class="img-fluid" src="img/post/post_9.png" alt="">
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img class="img-fluid" src="img/post/post_10.png" alt="">
+                </a>
+            </li>
+        </ul>
+    </aside> -->
+
+
+    <aside class="single_sidebar_widget newsletter_widget">
+        <h4 class="widget_title">Newsletter</h4>
+
+        <form action="/newsletter" method="POST">
+            <div class="form-group">
+                <input name="email" type="email" class="form-control" onfocus="this.placeholder = ''"
+                    onblur="this.placeholder = 'Enter email'" placeholder='Enter email' required>
+            </div>
+            <button class="button rounded-0 primary-bg text-white w-100 btn_4"
+                type="submit">Subscribe</button>
+        </form>
+    </aside>
+</div>

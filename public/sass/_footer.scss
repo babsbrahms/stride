@@ -1,10 +1,9 @@
 //--------- start footer Area -------------//
 .footer-area {
-	background-color: $section_bg; 
-	padding: 130px 0 25px;
+	background-color: $section_bg;
+	padding: 140px 0px 100px;
 	@media (max-width: 991px) {
-		// background: $title-color;
-		padding: 70px 0px 25px;
+		padding: 60px 0px;
 	}
 	.single-footer-widget {
 		@media (max-width: 991px) {
@@ -12,7 +11,7 @@
 		}
 
 		p{
-			color: #7b838a;
+			color: #666666;
 		}
 
 		h4 {
@@ -21,7 +20,6 @@
 			margin-bottom: 30px;
 			font-weight: 700;
 			font-size: 20px;
-			text-transform: capitalize;
 			@media (max-width: 1024px) {
 				font-size: 18px;
 			}
@@ -33,7 +31,7 @@
 			li {
 				margin-bottom: 14px;
 				a {
-					color: $font_4;
+					color: #666666;
 					@include transform_time(0.5s);
 					&:hover{
 						color: $btn_bg;
@@ -43,27 +41,23 @@
 		}
 		.form-wrap {
 			margin-top: 25px;
-			border: 1px solid #eee;
-			position: relative;
 		}
 		input {
 			height: 48px;
 			border: none;
+			width: 67% !important;
 			font-weight: 400;
 			background: transparent;
-			// color: $white;
+			padding-left: 20px;
 			border-radius: 0;
 			font-size: 14px;
-			padding: 5px 5px 5px 15px;
+			padding: 10px;
+			border: 1px solid #e1e1e1;
 			color: #999999;
 			&:focus {
 				outline: none;
 				box-shadow: none;
 			}
-			// @include placeholder {
-			// 	padding-left: 10px;
-			// 	// color: $link-color;
-			// }
 		}
 		.click-btn {
 			background-color: $btn_bg;
@@ -71,20 +65,25 @@
 			border-radius: 0;
 			border-top-left-radius: 0px;
 			border-bottom-left-radius: 0px;
-			height: 40px;
-			width: 50px;
+			padding: 8px 20px;
 			border: 0;
 			font-size: 12px;
 			font-weight: 400;
 			font-family: $font_stack_1;
-			position: absolute;
-			top: 5px;
-			right: 5px;
+			position: relative;
+			left: 0;
 			&:focus {
 				outline: none;
 				box-shadow: none;
       }
       
+      @media(max-width: 375px){
+        margin-top: 10px;
+      }
+
+			@media(min-width: 400px){
+				left: -50px;
+			}
 		}
 	}
 	.footer-bottom {
@@ -92,16 +91,6 @@
 		@media (max-width: 991px) {
 			margin-top: 20px;
 		}
-		p {
-			// color: $white;
-
-			a{
-				// color: $primary-color;
-			}
-		}
-		// span {
-		// 	font-weight: 700;
-		// }
 		.footer-social {
 			text-align: center;
 			@media (max-width: 991px) {
@@ -112,16 +101,10 @@
 				background: rgba(255, 255, 255, 0.15);
 				margin-left: 3px;
 				width: 32px;
-				// color: $white;
 				display: inline-grid;
 				text-align: center;
 				height: 32px;
 				align-content: center;
-				// @include transition();
-				&:hover {
-					// @extend .gradient-bg;
-					// background: $primary-color;
-				}
 
 				i,span{
 					font-size: 14px;
@@ -129,26 +112,8 @@
 			}
 		}
 	}
-	.copyright_text{
-		padding-top: 25px;
-		margin-top: 70px;
-		border-top: 1px solid #e6e8e9;
-		@media #{$tab}{
-			margin-top: 20px;
-			text-align: center;
-			p{
-				margin-bottom: 20px !important;
-			}
-		}
-		a{
-			color: $base_color;
-		}
-		.footer-social{
-			a{
-				color: #b9babb;
-				margin-left: 20px;
-			}
-		}
+	.btn_2{
+		margin-top: 0px;
 	}
 }
 //--------- end footer Area -------------//

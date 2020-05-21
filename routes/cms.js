@@ -68,24 +68,23 @@ router.get('/edit-post/:id', (req, res) => {
 })
 
 
-router.post('/edit-post/:id', upload.single('poster'), function (req, res) {
-    const { id } = req.params;
-    const { title, author, category, body, oldPoster} = req.body;
+router.post('/edit-post', upload.single('poster'),     [  
+    check('title', 'Title field is required').notEmpty,
+    check('author', 'Author field is required').notEmpty(),
+    check('category', 'Category field is required').notEmpty(),
+    check('body', 'Body field is required').notEmpty(),
+    check('id', 'Id field is required').notEmpty()
+], function (req, res) {
+    const { title, author, category, body, oldPoster, id} = req.body;
 
-    // const errors = validationResult(req);
+    const errors = validationResult(req);
 
-    // [  
-    //     check('title', 'Title field is required').notEmpty,
-    //     check('author', 'Author field is required').notEmpty(),
-    //     check('category', 'Category field is required').notEmpty(),
-    //     check('body', 'Body field is required').notEmpty()
-    //     ]
-    // if (!errors.isEmpty()) {
-    //   req.flash('errors', errors.array() )
-    // console.log('error: ',  errors.array());
+    if (!errors.isEmpty()) {
+      req.flash('errors', errors.array() )
+    console.log('error: ',  errors.array());
     
-    //   return res.redirect(`/edit-post/${id}`)
-    // }
+      return res.redirect(`/edit-post/${id}`)
+    }
     
     Blog.updateOne({ _id: id}, { $set: { 
         title, author, category, body, poster: (req.file && req.file.filename)? `/uploads/${req.file.filename}`: oldPoster
