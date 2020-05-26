@@ -8,7 +8,7 @@ var upload = multer({ dest: './public/uploads/' })
 var Blog = require('../model/blog')
 
 /* GET searchpage. */
-
+router.use(loggedIn)
 
 router.get('/', function(req, res, next) {
     Blog.find({}).sort({ createdAt: -1 }).exec(function (err, blogs) {
@@ -116,4 +116,15 @@ router.delete('/delete-post/:id', (req, res) => {
     })
 })
 
+
+
+function loggedIn (req, res, next) {
+    if (req.session.user && req.cookies.user_sid) {
+        next()
+
+    } else {
+        req.flash('errord', "Login is required")
+        res.redirect('/login');
+    }
+}
 module.exports = router;

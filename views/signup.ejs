@@ -1,0 +1,73 @@
+
+<%- include partials/head %>
+<body>
+    <!--::header part start::-->
+    <div style="height: 100px;"></div>
+    <%- include partials/header %>
+    <!-- Header part end-->
+
+    <!-- breadcrumb start-->
+    <section class="breadcrumb breadcrumb_bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb_iner text-center">
+                        <div class="breadcrumb_iner_item">
+                            <h2>Sign Up</h2>
+                            <p>Home<span>-</span>signup</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- breadcrumb start-->
+
+  <!-- ================ contact section start ================= -->
+  <section class="review_part padding_top">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <form action="/signup" method="post">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input required type="email" name="email" class="form-control" placeholder="Enter your email address">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input required type="password" name="password" class="form-control" placeholder="Enter your password">
+                    </div>
+
+                    <button type="submit" class="btn_2">Sign Up</button>
+
+                    <a href="/login">go to login</a>
+
+                    <!-- <div class="d-flex flex-row justify-content-end">
+                        <input type="submit" class="btn btn-success" value="Login">
+                    </div> -->
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+  <!-- ================ contact section end ================= -->
+
+<!-- footer part start-->
+<%- include partials/footer %>
+<!-- footer part end-->
+
+<!-- jquery plugins here-->
+<!-- jquery -->
+<script src="/js/jquery-1.12.1.min.js"></script>
+<!-- popper js -->
+<script src="/js/popper.min.js"></script>
+<!-- bootstrap js -->
+<script src="/js/bootstrap.min.js"></script>
+<!-- easing js -->
+<!-- particles js -->
+
+
+</body>
+
+</html>

@@ -44,12 +44,25 @@ app.use(express.static(path.join(__dirname, 'public')));
 
   // app.use(express.cookieParser('keyboard cat'));
   app.use(session({   
-    secret: 'keyboard cat',
+    key: 'user_sid',
+    secret: 'somerandonstuffs',
     resave: false,
-    saveUninitialized: true,
-    cookie: { maxAge: 60000 }
+    saveUninitialized: false,
+    cookie: {
+        expires: 600000
+    }
   }));
+
   app.use(flash());
+
+  // This middleware will check if user's cookie is still saved in browser and user is not set, then automatically log the user out.
+  // This usually happens when you stop your express server after login, your cookie still remains saved in the browser.
+  app.use((req, res, next) => {
+      if (req.cookies.user_sid && !req.session.user) {
+          res.clearCookie('user_sid');        
+      }
+      next();
+  });
 
 
 app.use('/', indexRouter);
