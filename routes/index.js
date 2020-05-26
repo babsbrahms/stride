@@ -24,6 +24,10 @@ router.get('/', function(req, res, next) {
 });
 
 
+router.get('/service', (req, res) => {
+  res.render('services', { page: 'Services',  msg: req.flash('msg'), errors: req.flash('errors') })
+})
+
 router.post('/newsletter' , [ check('email').isEmail().withMessage('Email is required')], (req, res) => {
   const { email, name } = req.body;
   console.log({ email, name });
@@ -49,6 +53,11 @@ router.post('/newsletter' , [ check('email').isEmail().withMessage('Email is req
   })
 })
 
+router.get('/emails', (req, res) => {
+  Newsletter.distinct('email')
+  .then(emails => res.json({ emails }))
+  .catch(err => res.send({ error: error.message }))
+})
 
 router.get('/search', function(req, res, next) {
   let { search } = req.query;
@@ -91,23 +100,36 @@ router.post('/signup',
   const user = new User()
   var salt = bcrypt.genSaltSync(10);
 
-  var hash = bcrypt.hashSync(password, salt);
-  user.email = email;
-  user.password = hash;
-  user.save()
-  .then(user => {
-      console.log('USER:', user);
-      console.log('VALUE: ', user.dataValues);
-      
-      req.flash('msg', 'User Created')
-      req.session.user = user;
-      res.redirect('/cms');
+  User.countDocuments((err, count) => {
+    if (err) {
+      res.locals.error = req.app.get('env') === 'development' ? err : {};
+    
+      return res.render('error', { page: 'Error' });
+    } else if (count > 1) {
+      req.flash('errors', [{ msg: 'You are not authorized to create an account!!!'}] )
+
+      return res.redirect('/signup');
+
+    } else {
+      var hash = bcrypt.hashSync(password, salt);
+      user.email = email;
+      user.password = hash;
+      user.save()
+      .then(user => {
+          console.log('USER:', user);
+          console.log('VALUE: ', user.dataValues);
+          
+          req.flash('msg', 'User Created')
+          req.session.user = user;
+          res.redirect('/cms');
+      })
+      .catch(error => {
+          
+          req.flash('errors', [{ msg: error.message }] )
+          res.redirect(req.get('referer'));
+      });
+    }
   })
-  .catch(error => {
-      
-      req.flash('errors', [{ msg: error.message }] )
-      res.redirect(req.get('referer'));
-  });
 })
 
 

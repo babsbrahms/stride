@@ -6,6 +6,7 @@ var logger = require('morgan');
 var mongoose = require('mongoose');
 var flash = require('connect-flash');
 var session = require('express-session');
+require('dotenv').config()
 
 var indexRouter = require('./routes/index');
 var contactRouter = require('./routes/contact');
@@ -22,7 +23,16 @@ app.set('view engine', 'ejs');
 
 // mongodb
 // mongoose
-mongoose.connect('mongodb://localhost:27017/strideinc', {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
+var mongoURI= "";
+var env = process.env.NODE_ENV || 'development';
+if (env === 'development') {
+  // dev mongo string
+  mongoURI = process.env.DB_DEV;
+} else {
+  // production
+  mongoURI = process.env.DB_PROD;
+}
+mongoose.connect(mongoURI, {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
 let mdb = mongoose.connection;
 
 mdb.once('open', () => {

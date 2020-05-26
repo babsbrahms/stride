@@ -2,7 +2,6 @@
 <%- include partials/head %>
 <body>
     <!--::header part start::-->
-    <div style="height: 100px;"></div>
     <%- include partials/header %>
     <!-- Header part end-->
 
@@ -27,7 +26,7 @@
   <section class="contact-section section_padding">
     <div class="container">
       <div class="d-none d-sm-block mb-5 pb-4">
-        <div id="map" style="height: 480px;"></div>
+        <!-- <div id="map" style="height: 480px;"></div>
         <script>
           function initMap() {
             var uluru = {lat: -25.363, lng: 131.044};
@@ -52,15 +51,20 @@
         </script>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDpfS1oRGreGSBU5HHjMmQ3o5NLw7VdJ6I&callback=initMap"></script>
         
-      </div>
+      </div> -->
 
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15758.45059965187!2d7.40389680944372!3d9.099005342458037!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x104e7513b10a5a03%3A0x143779d2dc607b28!2sMA&#39;Assabirin!5e0!3m2!1sen!2sng!4v1590509959610!5m2!1sen!2sng" width="100%" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+
+      <br/>
+      <br/>
+      <br/>
 
       <div class="row">
         <div class="col-12">
           <h2 class="contact-title">Get in Touch</h2>
         </div>
         <div class="col-lg-8">
-          <form class="form-contact contact_form" action="/contact" method="post" novalidate="novalidate">
+          <form id="contactForm" class="form-contact contact_form" action="/contact" method="post" novalidate="novalidate">
             <div class="row">
               <div class="col-12">
                 <div class="form-group">
@@ -93,21 +97,21 @@
           <div class="media contact-info">
             <span class="contact-info__icon"><i class="ti-home"></i></span>
             <div class="media-body">
-              <h3>Buttonwood, California.</h3>
-              <p>Rosemead, CA 91770</p>
+              <h3>Suite F9, Anafara plaza, 1st Avenue</h3>
+              <p>Gwanrinpa, FCT, Abuja</p>
             </div>
           </div>
           <div class="media contact-info">
             <span class="contact-info__icon"><i class="ti-tablet"></i></span>
             <div class="media-body">
-              <h3>00 (440) 9865 562</h3>
+              <h3>+2347043808068</h3>
               <p>Mon to Fri 9am to 6pm</p>
             </div>
           </div>
           <div class="media contact-info">
             <span class="contact-info__icon"><i class="ti-email"></i></span>
             <div class="media-body">
-              <h3>support@colorlib.com</h3>
+              <h3>info@strideincmarketing.com</h3>
               <p>Send us your query anytime!</p>
             </div>
           </div>
@@ -120,17 +124,37 @@
 <!-- footer part start-->
 <%- include partials/footer %>
 <!-- footer part end-->
+<script>
+  var form = document.getElementById('contactForm')
+  var message = form['message'];
+  var name = form['name'];
+  var email = form['email'];
+  var subject = form['subject'];
+  // var btn = form['btn']
 
-<!-- jquery plugins here-->
-<!-- jquery -->
-<script src="/js/jquery-1.12.1.min.js"></script>
-<!-- popper js -->
-<script src="/js/popper.min.js"></script>
-<!-- bootstrap js -->
-<script src="/js/bootstrap.min.js"></script>
-<!-- easing js -->
-<!-- particles js -->
+  form.onsubmit = function(e) {
+    e.preventDefault();
+    sendEmail(e)
+    return false;
+  }
 
+  // btn.onclick = function () {
+  //   // sendEmail(e)
+  //   alert('btn clicked')
+  // }
+  function sendEmail (e) {
+    var element = document.createElement('a');
+    element.setAttribute('href', `mailto:info@strideincmarketing.com?cc=${email}&subject=${encodeURI(subject)}&body=${encodeURI(message)}`)
+
+    element.style.display = 'none';
+
+    form.appendChild(element)
+
+    element.click()
+  }
+
+
+</script>
 
 </body>
 

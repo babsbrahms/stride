@@ -1,11 +1,87 @@
 var express = require('express');
 var router = express.Router();
 var multer = require('multer');
+var mongoose = require('mongoose');
+var crypto = require('crypto');
+var path = require('path');
+var GridFsStorage = require('multer-gridfs-storage');
+var Grid = require('gridfs-stream');
+
 const { check, validationResult } = require('express-validator');
 
-var upload = multer({ dest: './public/uploads/' })
-
 var Blog = require('../model/blog')
+
+// MONGODB URI
+var mongoURI= "";
+var env = process.env.NODE_ENV || 'development';
+if (env === 'development') {
+    // dev mongo string
+    mongoURI = process.env.DB_DEV;
+} else {
+    // production
+    mongoURI = process.env.DB_PROD;
+}
+console.log("mongoURI: ", mongoURI);
+
+// mongoose connection
+const promise = mongoose.connect(mongoURI, { useNewUrlParser: true });
+
+const conn = mongoose.connection;
+
+
+// Init gfs 
+let gfs;
+
+conn.once('open',  ()=> {
+  gfs = Grid(conn.db, mongoose.mongo);
+
+  gfs.collection('uploads')
+})
+
+
+
+// create storaege engine (multer-gridfs-storage)
+const storage = new GridFsStorage({
+    //   url: mongoURI,
+    db: promise,
+
+  file: (req, file) => new Promise((resolve, reject) => {
+
+            // bucketName === collectionName === 'uploades'
+            crypto.randomBytes(16, (err, buf) => {
+                if (err) {
+                    reject(err);
+                }
+                const filename = buf.toString('hex') + path.extname(file.originalname);
+                const fileInfo = {
+                filename,
+                bucketName: 'uploads'
+                };
+                resolve(fileInfo);
+            });
+      
+    })
+  
+
+});
+
+var upload = multer({ storage })
+
+
+router.get("/images/:filename", (req, res)=>{
+    // gfs.files.find
+    gfs.files.findOne({filename: req.params.filename}, (err, file)=>{
+        if(err){
+            res.status(404).json({err: 'Can\'t find your image'})
+        }else if(!file){
+            res.status(404).json({err: 'Can\'t find your image'})
+        } else if(file){
+            const fileStream = gfs.createReadStream(file)
+            fileStream.pipe(res)
+        }
+    })
+})
+
 
 /* GET searchpage. */
 router.use(loggedIn)
@@ -36,9 +112,12 @@ router.post('/create-posts', upload.single('poster'), [
 
       return res.redirect('/cms')
     }
+
+    console.log(req.file);
+    
     
     Blog.create({
-        title, author, category, body, poster: `/uploads/${req.file.filename}`
+        title, author, category, body, poster: `/cms/images/${req.file.filename}`
     }).then((doc) => {
         console.log(doc);
         req.flash('msg', 'Blog created')
@@ -87,7 +166,7 @@ router.post('/edit-post', upload.single('poster'), [
     }
     
     Blog.updateOne({ _id: id}, { $set: { 
-        title, author, category, body, poster: (req.file && req.file.filename)? `/uploads/${req.file.filename}`: oldPoster
+        title, author, category, body, poster: (req.file && req.file.filename)? `/cms/images/${req.file.filename}` : oldPoster
     }}).exec((err, blog) => {
         if (err) {
             res.locals.error = req.app.get('env') === 'development' ? err : {};
