@@ -68,21 +68,21 @@ router.get('/edit-post/:id', (req, res) => {
 })
 
 
-router.post('/edit-post', upload.single('poster'),     [  
-    check('title', 'Title field is required').notEmpty,
+router.post('/edit-post', upload.single('poster'), [
+    check('title', 'Title field is required').notEmpty(),
     check('author', 'Author field is required').notEmpty(),
     check('category', 'Category field is required').notEmpty(),
     check('body', 'Body field is required').notEmpty(),
     check('id', 'Id field is required').notEmpty()
-], function (req, res) {
+], function(req, res, next) {
+
     const { title, author, category, body, oldPoster, id} = req.body;
 
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
       req.flash('errors', errors.array() )
-    console.log('error: ',  errors.array());
-    
+
       return res.redirect(`/edit-post/${id}`)
     }
     
@@ -99,7 +99,8 @@ router.post('/edit-post', upload.single('poster'),     [
         }
         
     })
-})
+
+});
 
 
 router.delete('/delete-post/:id', (req, res) => {
