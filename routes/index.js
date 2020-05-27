@@ -10,16 +10,9 @@ var User = require('../model/user');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  Blog.find({}).sort({ createdAt: -1 }).exec(function (err, blogs) {
-    Blog.distinct('category').exec((errs, categories) => {
-      if (err || errs) {
-        res.locals.error = req.app.get('env') === 'development' ? err||errs : {};
 
-        res.render('error', { page: 'Blog', message: err.message|| errs.message });
-      }
-      res.render('index', { page: 'Home', blogs, categories, msg: req.flash('msg'), errors: req.flash('errors') });
-    })
-  })
+    res.render('index', { page: 'Home', msg: req.flash('msg'), errors: req.flash('errors') });
+
 
 });
 

@@ -33,7 +33,7 @@
                         <article class="blog_item">
                             <div class="blog_item_img">
                                 <img class="card-img rounded-0" src="<%=blog.poster%>" alt="">
-                                <a href="#" class="blog_item_date">
+                                <a class="blog_item_date">
                                     <h3><%=new Date(blog.createdAt).toLocaleDateString() %></h3>
                                 </a>
                             </div>
@@ -44,7 +44,7 @@
                                 </a>
                                 <p><%=blog.snippet%></p>
                                 <ul class="blog-info-link">
-                                    <li><a href="#"><i class="far fa-user"></i><%=blog.category%></a></li>
+                                    <li><a href="/category/<%=blog.category%>"><i class="far fa-user"></i><%=blog.category%></a></li>
                                     
                                 </ul>
                             </div>
@@ -54,18 +54,12 @@
                         <nav class="blog-pagination justify-content-center d-flex">
                             <ul class="pagination">
                                 <li class="page-item">
-                                    <a href="#" class="page-link" aria-label="Previous">
+                                    <a href="/blog?nav=previous" class="page-link <%if(current_number === 0){%>disabled<%}%>" aria-label="Previous">
                                         <i class="ti-angle-left"></i>
                                     </a>
                                 </li>
                                 <li class="page-item">
-                                    <a href="#" class="page-link">1</a>
-                                </li>
-                                <li class="page-item active">
-                                    <a href="#" class="page-link">2</a>
-                                </li>
-                                <li class="page-item">
-                                    <a href="#" class="page-link" aria-label="Next">
+                                    <a href="/blog?nav=next" class="page-link <%if(blogs.length < limit){%>disabled<%}%>" aria-label="Next">
                                         <i class="ti-angle-right"></i>
                                     </a>
                                 </li>

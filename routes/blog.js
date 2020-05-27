@@ -7,14 +7,30 @@ var Comment = require('../model/comment')
 
 
 router.get('/', function(req, res, next) {
-  Blog.find({}).sort({ createdAt: -1 }).exec(function(err, blogs) {
+  const {nav} = req.query;
+  let current = req.session.blog_number || 0;
+  if (nav === 'previous' && (current !== 0) ) {
+    current = current - 1;
+  } else if (nav === 'next') {
+    current = current + 1;
+  } 
+
+  req.session.blog_number = current;
+  let limit = 10;
+  let skip = limit*current;
+  Blog.find({}).sort({ createdAt: -1 }).skip(skip).limit(limit).exec(function (err, blogs) {
     Blog.distinct('category').exec((errs, categories) => {
       if (err || errs) {
         res.locals.error = req.app.get('env') === 'development' ? err||errs : {};
 
         res.render('error', { page: 'Blog', message: err.message|| errs.message });
+      } else if ((blogs.length === 0) && (current !== 0)) {
+        let count = (current > 0)? current - 1 : 0
+        req.session.blog_number = count;
+        res.redirect('/blog')
+      } else {
+        res.render('blog', { page: 'Blog', blogs, categories, msg: req.flash('msg'), errors: req.flash('errors'), current_number: current, limit });
       }
-      res.render('Blog', { page: 'Blog', blogs, categories, msg: req.flash('msg'), errors: req.flash('errors')  });
     })
   })
 });
